@@ -4,7 +4,23 @@
 \usepackage{enumitem}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{adjustbox}
 \usepackage{centernot}
+\usepackage{hyperref}
+\usepackage{booktabs} 
+\usepackage{array} 
+\usepackage{tikz} 
+\usetikzlibrary{babel,external}
+\usepackage{pgfplots, pgfplotstable}
+\pgfplotsset{compat=1.18, width=\textwidth-\rightmargin-\leftmargin}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue
+}
+\pgfkeys{/pgf/number format/.cd, int detect, use comma, 1000 sep={\ }}
+\pgfplotstableset{col sep=comma}
+\tikzexternalize[prefix=tikzpics/] 
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lema}
@@ -28,16 +44,78 @@
 		
 		Finalmente, la variable independiente fue seleccionada para este estudio debido a que nos interesa tener la capacidad de predecir el rendimiento de las cosechas anuales en base a las tecnologías utilizadas y/o la disponibilidad de tierras.
 		
+		\pagebreak
 		\item ~
+		\pgfplotstableread{../dataset.csv}\datasettable
 		\begin{table}[h!]
 			\centering
 			\bgroup
+			\begin{adjustbox}{min width=\labelwidth}
 			\def\arraystretch{1.5}
-			\begin{tabular}{|c|c|c|c|c|c|c|c|c|}\hline
+			\begin{tabular}{*{9}{|c}|}\hline
 				$Y$ & $\hat{y_i} = \hat{\beta_1}x_i+\hat{\beta_0}$ & $\hat{\sigma}^2$ & $R^2$ & $r$ & $IC(\beta_1)$ & $IC(\beta_0)$ & $ICM(Y)$ & $IP(y)$\\\hline
 			\end{tabular}
+			\end{adjustbox}
 			\egroup
 		\end{table}
+		\begin{figure}[h!]
+		\centering 
+		\begin{tikzpicture}
+			\begin{axis}[
+				grid=major,
+				ylabel=Mani$\frac{kg}{hec}$,
+				xlabel=Superficie sembrada de maní en hectareas,
+				legend pos=north west,
+				scale mode=stretch to fill,
+				scaled ticks=false,
+				xticklabel style={
+					rotate=45,
+					anchor=east,
+					yshift=-4pt,
+					/pgf/number format/.cd,
+					fixed,
+					precision=0,
+					1000 sep={\ }
+				}
+				]
+				\addplot [only marks, red, mark=*] table[x=superficie_sembrada_mani_ha,y=rendimiento_mani_kgxha]\datasettable;
+				
+				\addplot[blue, solid, mark=*, domain=45606:452118] 
+				{0.002731115*x + 700.57505221};
+				\addlegendentry{Regressión Lineal}
+			\end{axis}
+		\end{tikzpicture}
+		\label{fig:sembrado}
+		\end{figure}\pagebreak
+		\begin{figure}[h!]
+		\centering 
+		\begin{tikzpicture}
+			\begin{axis}[
+				grid=major,
+				ylabel=Mani$\frac{kg}{hec}$,
+				xlabel=Indice de tiempo (año),
+				legend pos=north west,
+				scale mode=stretch to fill,
+				scaled ticks=false,
+				xticklabel style={
+					rotate=45,
+					anchor=east,
+					yshift=-4pt,
+					/pgf/number format/.cd,
+					fixed,
+					precision=0,
+					1000 sep={}
+				}
+				]
+				\addplot [only marks, red, mark=*] table[x=indice_tiempo,y=rendimiento_mani_kgxha]\datasettable;
+				
+				\addplot[blue, solid, mark=*, domain=1927:2023] 
+				{19.010073638*x-36214.433785565};
+				\addlegendentry{Regressión Lineal}
+			\end{axis}
+		\end{tikzpicture}
+		\label{fig:tiempo}
+		\end{figure}\pagebreak
 		\item
 	\end{enumerate}
 	
