@@ -3,16 +3,20 @@
 \usepackage{mathtools}
 \usepackage{enumitem}
 \usepackage{amssymb}
+\usepackage[table,xcdraw]{xcolor}
 \usepackage{amsthm}
 \usepackage{adjustbox}
 \usepackage{centernot}
+\usepackage{multirow}
+\usepackage{bm}
 \usepackage{hyperref}
 \usepackage{booktabs} 
 \usepackage{array} 
+\usepackage{makecell}
 \usepackage{tikz} 
 \usetikzlibrary{babel,external}
 \usepackage{pgfplots, pgfplotstable}
-\pgfplotsset{compat=1.18, width=\textwidth-\rightmargin-\leftmargin}
+\pgfplotsset{compat=1.18, width=\textwidth-\rightmargin-\leftmargin, height=(\textheight-2\topmargin)/2}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -49,44 +53,63 @@
 		\pgfplotstableread{../dataset.csv}\datasettable
 		\begin{table}[h!]
 			\centering
+			\begin{adjustbox}{max width=\textwidth}
 			\bgroup
-			\begin{adjustbox}{min width=\labelwidth}
-			\def\arraystretch{1.5}
-			\begin{tabular}{*{9}{|c}|}\hline
-				$Y$ & $\hat{y_i} = \hat{\beta_1}x_i+\hat{\beta_0}$ & $\hat{\sigma}^2$ & $R^2$ & $r$ & $IC(\beta_1)$ & $IC(\beta_0)$ & $ICM(Y)$ & $IP(y)$\\\hline
+			\def\arraystretch{2}
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$Y$ &
+				$\hat{y_i} = \hat{\beta_1}x_i+\hat{\beta_0}$ &
+				$\hat{\sigma}^2$ \\ \hline
+				\multirow{7}{*}{$x_1$} &
+				\makecell{$\hat{y_i} = 19,010073638x_i -$ \\ $36214,433785565$} &
+				$677384,754900883$ \\ \cline{2-3} 
+				&
+				$R^2$ &
+				$r$ \\ \cline{2-3} 
+				&
+				$0,618736208$ &
+				$0,786597869$ \\ \cline{2-3} 
+				&
+				$IC(\beta_1)$ &
+				$IC(\beta_0)$ \\ \cline{2-3} 
+				&
+				\begin{tabular}[c]{@{}l@{}}\makecell{\\ $[13,085213851;$\\\\ $24,934933425]$\\ }\end{tabular} &
+				\begin{tabular}[c]{@{}l@{}}\makecell{\\ $[-53073.09130;$\\\\ $-19355.776266]$\\ }\end{tabular} \\ \cline{2-3} 
+				&
+				$ICM(Y)$ &
+				$IP(y)$ \\ \cline{2-3} 
+				&
+				\begin{tabular}[c]{@{}l@{}}\makecell{\\ $-36214,433785565+19,010073638-1,9852$\\$\sqrt{677384,754900883(\frac{1}{97}+\frac{(x^*-1975)^2}{76048})}$; \\\\ $-36214,433785565+19,010073638+1,9852$\\$\sqrt{677384,754900883(\frac{1}{97}+\frac{(x^*-1975)^2}{76048})}$\\ }\end{tabular} &
+				\begin{tabular}[c]{@{}l@{}}\makecell{\\ $\hat{Y^*}-1,9852$\\$\sqrt{677384,754900883(1+\frac{1}{97}+\frac{(x^*-1975)^2}{76048})}$; \\\\ $\hat{Y^*}+1,9852$\\$\sqrt{677384,754900883(1+\frac{1}{97}+\frac{(x^*-1975)^2}{76048})}$\\ }\end{tabular} \\ \hline
+				$Y$ &
+				$\hat{y_i} = \hat{\beta_1}x_i+\hat{\beta_0}$ &
+				$\hat{\sigma}^2$ \\ \hline
+				\multirow{7}{*}{$x_2$} &
+				\makecell{$\hat{y_i} = 0,002731115x_i +$ \\ $700,57505221$} &
+				$1405735,9731028215$ \\ \cline{2-3} 
+				&
+				$R^2$ &
+				$r$ \\ \cline{2-3} 
+				&
+				$0,208786109$ &
+				$0,456931186$ \\ \cline{2-3} 
+				&
+				$IC(\beta_1)$ &
+				$IC(\beta_0)$ \\ \cline{2-3} 
+				&
+				\begin{tabular}[c]{@{}l@{}}\makecell{\\ $[-21,109573105;$\\\\ $21,115035335]$\\ }\end{tabular} &
+				\begin{tabular}[c]{@{}l@{}}\makecell{\\ $[158,233779405;$\\\\ $1242,916325015]$\\ }\end{tabular} \\ \cline{2-3} 
+				&
+				$ICM(Y)$ &
+				$IP(y)$ \\ \cline{2-3} 
+				&
+				\begin{tabular}[c]{@{}l@{}}\makecell{\\ $700,57505221+0,002731115-1,9852$\\$\sqrt{1405735,9731028215(\frac{1}{97}+\frac{(x^*-230633,494845361)^2}{1243287228824,25})}$; \\\\ $700,57505221+0,002731115+1,9852$\\$\sqrt{1405735,9731028215(\frac{1}{97}+\frac{(x^*-230633,494845361)^2}{1243287228824,25})}$\\ }\end{tabular} &
+				\begin{tabular}[c]{@{}l@{}}\makecell{\\ $\hat{Y^*}-1,9852$\\$\sqrt{1405735,9731028215(1+\frac{1}{97}+\frac{(x^*-230633,494845361)^2}{1243287228824,25})}$; \\\\ $\hat{Y^*}+1,9852$\\$\sqrt{1405735,9731028215(1+\frac{1}{97}+\frac{(x^*-230633,494845361)^2}{1243287228824,25})}$\\ }\end{tabular} \\ \hline
 			\end{tabular}
-			\end{adjustbox}
 			\egroup
+			\end{adjustbox}
 		\end{table}
-		\begin{figure}[h!]
-		\centering 
-		\begin{tikzpicture}
-			\begin{axis}[
-				grid=major,
-				ylabel=Mani$\frac{kg}{hec}$,
-				xlabel=Superficie sembrada de maní en hectareas,
-				legend pos=north west,
-				scale mode=stretch to fill,
-				scaled ticks=false,
-				xticklabel style={
-					rotate=45,
-					anchor=east,
-					yshift=-4pt,
-					/pgf/number format/.cd,
-					fixed,
-					precision=0,
-					1000 sep={\ }
-				}
-				]
-				\addplot [only marks, red, mark=*] table[x=superficie_sembrada_mani_ha,y=rendimiento_mani_kgxha]\datasettable;
-				
-				\addplot[blue, solid, mark=*, domain=45606:452118] 
-				{0.002731115*x + 700.57505221};
-				\addlegendentry{Regressión Lineal}
-			\end{axis}
-		\end{tikzpicture}
-		\label{fig:sembrado}
-		\end{figure}\pagebreak
 		\begin{figure}[h!]
 		\centering 
 		\begin{tikzpicture}
@@ -95,7 +118,6 @@
 				ylabel=Mani$\frac{kg}{hec}$,
 				xlabel=Indice de tiempo (año),
 				legend pos=north west,
-				scale mode=stretch to fill,
 				scaled ticks=false,
 				xticklabel style={
 					rotate=45,
@@ -114,9 +136,41 @@
 				\addlegendentry{Regressión Lineal}
 			\end{axis}
 		\end{tikzpicture}
+		\begin{tikzpicture}
+			\begin{axis}[
+				grid=major,
+				ylabel=Mani$\frac{kg}{hec}$,
+				xlabel=Superficie sembrada de maní en hectareas,
+				legend pos=north west,
+				scaled ticks=false,
+				xticklabel style={
+					rotate=45,
+					anchor=east,
+					yshift=-4pt,
+					/pgf/number format/.cd,
+					fixed,
+					precision=0,
+					1000 sep={\ }
+				}
+				]
+				\addplot [only marks, red, mark=*] table[x=superficie_sembrada_mani_ha,y=rendimiento_mani_kgxha]\datasettable;
+				
+				\addplot[blue, solid, mark=*, domain=45606:452118] 
+				{0.002731115*x + 700.57505221};
+				\addlegendentry{Regressión Lineal}
+			\end{axis}
+		\end{tikzpicture}
 		\label{fig:tiempo}
-		\end{figure}\pagebreak
-		\item
+		\end{figure}\clearpage
+		\item Como se puede observar en las tablas, el valor de $R^2$ en el modelo que utiliza como variable independiente la superficie sembrada es mucho menor que el valor de $R^2$ el modelo que toma en cuenta los años. Mientras más alto es el valor de $R^2$, mejor será nuestro modelo de regresión lineal simple para explicar la variación del rendimiento. Esto significa que es factible negar el hecho de que la variación de la superficie sembrada con maní explique el aumento en el rendimiento de las cosechas.
+		
+		Por otro lado, $r$ indica la dirección de la relación entre las dos variables. Al ser $r$ un valor dentro del intervalo de 0 a 1, se puede suponer que existe una correlación positiva fuerte entre el pasar de los años y el aumento del rendimiento de las cosechas. Al aumentar $x$ (los años), aumenta también $y$ (el rendimiento). Esto es visible en la gráfica que muestra el modelo con variable independiente $x_1$.
+		
+		En cambio, al considerar el $r$ que corresponde al modelo que toma en cuenta las hectáreas sembradas como variable predictiva, se observa que la relación también sería positiva, mas no tan fuerte. Por lo tanto, es posible suponer que no está tan fuertemente relacionado el aumento en la cantidad de hectáreas sembradas con el aumento en el rendimiento de las cosechas, aunque tampoco es posible afirmar que la correlación sea nula.
+		
+		Con $x_1: r = \sqrt{R^2} = \sqrt{0,618736208} = 0,786597869$.
+		
+		Con $x_2: r = \sqrt{R^2} = \sqrt{0,208786109} = 0,456931186$.
 	\end{enumerate}
 	
 	\section{Regresión Lineal Múltiple}
