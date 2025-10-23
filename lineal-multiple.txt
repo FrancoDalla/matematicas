@@ -1,0 +1,28 @@
+Independientes:
+1* Año
+2* SuperficieSembrada
+3* SuperficieCosechada
+4* Produccion
+
+Dependientes:
+* Rendimiento
+
+// Esta bien el planteo? Revisar con el apunte.
+
+f(b0, b1, b2, b3, b4) = E [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]²
+
+Derivadas parciales:
+
+devf/dev0* = -2 * E [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+devf/dev1* = -2 * E x1i * [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+devf/dev2* = -2 * E x2i * [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+devf/dev3* = -2 * E x3i * [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+devf/dev4* = -2 * E x4i * [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+
+Ecuaciones normales:
+
+E yi = n*b0 + b1* E x1i + b2* E x2i + b3* E x3i
+E x1i yi = [b0 * E x1i] + [b1* E x²1i] + [b2* E x2i * x1i] + [b3* E x3i * x1i] + [b4* E x4i * x1i] 
+E x2i yi = [b0 * E x2i] + [b1* E x1i * x2i] + [b2* E x²2i] + [b3* E x3i * x2i] + [b4* E x4i * x2i]
+E x3i yi = [b0 * E x3i] + [b1* E x1i * x3i] + [b2* E x2i* x3i] + [b3* E x²3i] + [b4* E x4i * x3i]
+E x4i yi = [b0 * E x4i] + [b1* E x1i * x4i] + [b2* E x2i* x4i] + [b3* E x3i * x4i] + [b4* E x²4i]
