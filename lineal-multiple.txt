@@ -97,10 +97,33 @@ Entonces para despejar ^b debemos hacer:
 
 Para hacer la estimación de los betas vamos a utilizar un script en Python usando las librerías pandas para leer y procesar el .csv y numpy para los cálculos.
 
-[ Obtener los betas a partir del script de Moro ]
+b0 (rendimiento): -16988.052990805078
+b1 (Año): 9.257050531336022
+b2 (SuperficieSembrada): 0.0031599268599484262
+b3 (SuperficieCosechada): -0.0066507792825439335
+b4 (Producción): 0.002069716111442946
+
+R² del modelo: 0.9120
+
+
+[ pegar link al codigo "minimos_cuadrados.py"]
 
 Y la estimacíon de la ecuación de regresión finalmente queda como: 
 ŷ = ^b0 + ^b1*x1 + ^b2*x2+ ^b3*x3+ ^b4*x4
+
+ŷ= -16988.052 + 9.25 * año + 0,00315 * SuperficieSembrada  - 0.00663  *SuperficieCosechada 
+
+en este caso podemos ver como el coeficiente del año (b1) indica una tendencia del rendimiento a lo largo del tiempo
+posiblemente por mejoras tecnologocias o mejoras en las practicas agricolos. El coeficioente de SuperficieSembrada (b2 >0)
+sugiere que mayores superficies tienenden a incrementar levemente el rendimiento promedio.
+En cambio, superficie_cosechada (B3 > 0) podria verse como que cuando aumental la superficie efectivamente cosechada,
+el rendimiento promedio baja, esto puede darse por factores climatios, pestes, etc.
+el coeficiente de produccion (b4 >0) es positivo, esto es coherente con la idea de que mayor produccion total se asocia con mayores rendimientos 
+
+el R^2 = 0.9120 nos indica que el modelo explica cerca del %91 de la variablididad del rendimiento. como es un valor alto es decir cercano a 1
+muestra que este modelo se ajusta correctamente 
+
+En conclusion, el modelo se ajusta de manera razonable a los datos y permite estimar el rendimiento a partir de las variables independeintes.
 
 
 
