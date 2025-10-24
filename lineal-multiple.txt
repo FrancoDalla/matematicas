@@ -10,6 +10,22 @@ Independientes:
 Dependientes:
 * Rendimiento
 
+
+Definimos el modelo de regresion lineal multiple por descenso de gradiente:
+
+El objetivo de la regresión lineal es encontrar el vector de parámetros θ=[θ0​,θ1​,θ2​,θ3​,θ4​]T que minimiza la función de costo J(θ), la cual mide el error cuadrático medio (MSE) entre los valores reales (yi​) y las predicciones (y^​i​).
+
+La función de costo utilizada es el Error Cuadrático Medio (MSE) dividido por 2m:
+J(θ)=2m1​i=1∑m​(y^​(i)−y(i))2=2m1​(Xθ−y)T(Xθ−y)
+
+Donde m es el número de muestras.
+
+El algoritmo fue ejecutado con una tasa de aprendizaje α=0.01 y un máximo de 10,000 iteraciones.
+
+El algoritmo implementado dio resultados de R^2 = 0.9097. Lo que indica que el modelo explica cerca del %91 de la variablididad del rendimiento. como es un valor alto es decir cercano a 1
+muestra que este modelo se ajusta correctamente
+
+*****************************************************************
 Definimos el modelo de regresion lineal multiple por minimos cuadrados de la siguiente forma:
 
 f(b0, b1, b2, b3, b4) = ∑ [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]²

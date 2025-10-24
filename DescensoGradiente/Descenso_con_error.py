@@ -7,16 +7,19 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-
 def cost_function(X, y, theta):
+    """
+    Costo de la funcion
+    """
+
     m = y.size
     error = np.dot(X, theta.T) - y
     cost = 1/(2*m) * np.dot(error.T, error)
     return cost, error
 
-def gradient_descent(X, y, theta, alpha, max_iters, tolerance=1e-6, min_cost_change=1e-8):
+def gradient_descent(X, y, theta, alpha, max_iters, tolerancia=1e-6, min_cost_change=1e-8):
     """
-    Descenso del gradiente con criterio de convergencia
+    Descenso del gradiente
 
     Parameters:
     - X: matriz de características
@@ -24,7 +27,7 @@ def gradient_descent(X, y, theta, alpha, max_iters, tolerance=1e-6, min_cost_cha
     - theta: parámetros iniciales
     - alpha: tasa de aprendizaje
     - max_iters: máximo número de iteraciones
-    - tolerance: error aceptable para la convergencia
+    - tolerancia: error aceptable para la convergencia
     - min_cost_change: cambio mínimo en el costo para considerar convergencia
     """
     cost_array = []
@@ -35,18 +38,18 @@ def gradient_descent(X, y, theta, alpha, max_iters, tolerance=1e-6, min_cost_cha
         cost, error = cost_function(X, y, theta)
         cost_array.append(cost)
 
-        # Verificar criterios de convergencia
+
         if i > 0:
             cost_change = abs(previous_cost - cost)
 
-            # Criterio 1: Cambio en el costo muy pequeño
+            # Corte de control 1: Infimo cambio en el costo
             if cost_change < min_cost_change:
                 print(f'Convergencia alcanzada: cambio en costo ({cost_change:.2e}) < {min_cost_change}')
                 break
 
-            # Criterio 2: Costo por debajo del error aceptable
-            if cost < tolerance:
-                print(f'Convergencia alcanzada: costo ({cost:.2e}) < tolerancia ({tolerance})')
+            # Corte de control 2: Costo por debajo del error aceptable
+            if cost < tolerancia:
+                print(f'Convergencia alcanzada: costo ({cost:.2e}) < tolerancia ({tolerancia})')
                 break
 
         # Actualizar parámetros
@@ -59,18 +62,6 @@ def gradient_descent(X, y, theta, alpha, max_iters, tolerance=1e-6, min_cost_cha
 
     return theta, np.array(cost_array)
 
-def plotChart(cost_num):
-    """
-    Grafica la evolución del costo
-    """
-    fig, ax = plt.subplots()
-    ax.plot(np.arange(len(cost_num)), cost_num, 'r-', linewidth=2)
-    ax.set_xlabel('Iteraciones')
-    ax.set_ylabel('Costo (J)')
-    ax.set_title('Evolución del Costo vs Iteraciones')
-    ax.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.show()
 
 def run():
     # Leer datos del dataset
@@ -86,10 +77,9 @@ def run():
     # Añadir columna de unos para el término de bias
     X_final = np.c_[np.ones(X_normalized.shape[0]), X_normalized]
 
-    # Set hyperparameters
     alpha = 0.01
     max_iterations = 10000  # Máximo más alto para permitir convergencia
-    tolerance = 1e-4       # Error aceptable
+    tolerancia = 1e-4       # Error aceptable
     min_cost_change = 1e-8 # Cambio mínimo en costo para convergencia
 
     # Initialize Theta Values to 0
@@ -102,13 +92,12 @@ def run():
     print(f'Parámetros iniciales theta: {theta}')
     print(f'Costo inicial: {initial_cost:.6f}')
     print(f'Tasa de aprendizaje (alpha): {alpha}')
-    print(f'Error aceptable (tolerancia): {tolerance}')
+    print(f'Error aceptable (tolerancia): {tolerancia}')
     print(f'Máximo de iteraciones: {max_iterations}')
     print('-' * 60)
 
-    # Run Gradient Descent
     theta_final, cost_history = gradient_descent(
-        X_final, y, theta, alpha, max_iterations, tolerance, min_cost_change
+        X_final, y, theta, alpha, max_iterations, tolerancia, min_cost_change
     )
 
     print('-' * 60)
@@ -120,10 +109,6 @@ def run():
     print(f'Reducción del costo: {((initial_cost - final_cost)/initial_cost * 100):.2f}%')
     print('=' * 60)
 
-    # Display cost chart
-    plotChart(cost_history)
-
-    # Mostrar métricas adicionales
     print('\nMÉTRICAS ADICIONALES:')
     print('-' * 30)
 
