@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 # se lee el archivo que contiene todo nuestro dataset
-df = pd.read_csv("dataset.csv")
+df = pd.read_csv("../dataset.csv")
 
 # en el eje X nos quedaran las varialbles independientes 
 # en el eje Y nos quedara nuestra variable dependiente 
