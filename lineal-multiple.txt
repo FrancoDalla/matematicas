@@ -1,0 +1,133 @@
+Para lograr una aproximacion mas precisa vamos a intentar hacer una regresion lineal multiple utilizando todas las variables independientes disponibles en nuestro dataset.
+Estas variables son:
+
+Independientes:
+1* Año
+2* SuperficieSembrada
+3* SuperficieCosechada
+4* Produccion
+
+Dependientes:
+* Rendimiento
+
+
+Definimos el modelo de regresion lineal multiple por descenso de gradiente:
+
+El objetivo de la regresión lineal es encontrar el vector de parámetros θ=[θ0​,θ1​,θ2​,θ3​,θ4​]T que minimiza la función de costo J(θ), la cual mide el error cuadrático medio (MSE) entre los valores reales (yi​) y las predicciones (y^​i​).
+
+La función de costo utilizada es el Error Cuadrático Medio (MSE) dividido por 2m:
+J(θ)=2m1​i=1∑m​(y^​(i)−y(i))2=2m1​(Xθ−y)T(Xθ−y)
+
+Donde m es el número de muestras.
+
+El algoritmo fue ejecutado con una tasa de aprendizaje α=0.01 y un máximo de 10,000 iteraciones.
+
+El algoritmo implementado dio resultados de R^2 = 0.9097. Lo que indica que el modelo explica cerca del %91 de la variablididad del rendimiento. como es un valor alto es decir cercano a 1
+muestra que este modelo se ajusta correctamente
+
+*****************************************************************
+Definimos el modelo de regresion lineal multiple por minimos cuadrados de la siguiente forma:
+
+f(b0, b1, b2, b3, b4) = ∑ [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]²
+
+A partir de ella sacamos las derivadas parciales de cada variable independiente y b0, que representa nuestra ordenada al origen:
+
+devf/dev0* = -2 * ∑ [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+devf/dev1* = -2 * ∑ x1i * [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+devf/dev2* = -2 * ∑ x2i * [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+devf/dev3* = -2 * ∑ x3i * [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+devf/dev4* = -2 * ∑ x4i * [yi - (b0 + b1*x1i + b2*x2i + b3*x3i + b4*x4i)]
+
+Tras igualarlas a cero obtenemos el siguiente sistema de ecuaciones normales:
+
+∑ yi = n*b0 + b1* ∑ x1i + b2* ∑ x2i + b3* ∑ x3i
+∑ x1i yi = [b0 * ∑ x1i] + [b1* ∑ x²1i] + [b2* ∑ x2i * x1i] + [b3* ∑ x3i * x1i] + [b4* ∑ x4i * x1i] 
+∑ x2i yi = [b0 * ∑ x2i] + [b1* ∑ x1i * x2i] + [b2* ∑ x²2i] + [b3* ∑ x3i * x2i] + [b4* ∑ x4i * x2i]
+∑ x3i yi = [b0 * ∑ x3i] + [b1* ∑ x1i * x3i] + [b2* ∑ x2i* x3i] + [b3* ∑ x²3i] + [b4* ∑ x4i * x3i]
+∑ x4i yi = [b0 * ∑ x4i] + [b1* ∑ x1i * x4i] + [b2* ∑ x2i* x4i] + [b3* ∑ x3i * x4i] + [b4* ∑ x²4i]
+
+Analogamente, las podemos expresar de forma matricial:
+
+ ---------------------------------------------------------------     ----        ------------
+|   n   | ∑ x1i       | ∑ x2i       | ∑ x3i       | ∑ x4i       |   | b0 |      | ∑ yi       |
+ ---------------------------------------------------------------     ----        ------------
+| ∑ x1i | ∑ x²1i      | ∑ x2i * x1i | ∑ x3i * x1i | ∑ x4i * x1i |   | b1 |      | ∑ x1i * yi |
+ ---------------------------------------------------------------     ----        ------------
+| ∑ x2i | ∑ x1i * x2i | ∑ x²2i      | ∑ x3i * x2i | ∑ x4i * x2i |   | b2 |      | ∑ x2i * yi |
+ ---------------------------------------------------------------     ----        ------------
+| ∑ x3i | ∑ x1i * x3i | ∑ x2i* x3i  | ∑ x²3i      | ∑ x4i * x3i |   | b3 |      | ∑ x3i * yi |
+ ---------------------------------------------------------------     ----        ------------
+| ∑ x4i | ∑ x1i * x4i | ∑ x2i* x4i  | ∑ x3i * x4i | ∑ x²4i      | * | b4 | =    | ∑ x4i * yi |
+ ---------------------------------------------------------------     ----        ------------
+[...............................X...............................] * [..b..] =   [......Y......]
+
+Y = X*b
+
+n = 97
+
+∑ x1i = 191575              [Suma de los valores de la variable independiente años]
+∑ x2i = 22371449            [Suma de los valores de la variable independiente superficie_sembrada en hectáreas]
+∑ x3i = 21446480            [Suma de los valores de la variable independiente superficie_cosechada en hectáreas]
+∑ x4i = 36439841,4          [Suma de los valores de la variable independiente producción en toneladas]
+
+∑ x²1i = 378436673          [Suma de los valores al cuadrado de la variable independiente años]
+∑ x²2i = 6402892696449      [Suma de los valores al cuadrado de la variable independiente superficie_sembrada en hectáreas]
+∑ x²3i = 5972973986094      [Suma de los valores al cuadrado de la variable independiente superficie_cosechada en hectáreas]
+∑ x²4i = 24719672959067,2   [Suma de los valores al cuadrado de la variable independiente producción en toneladas]
+
+∑ yi = 129054,78            [Suma de los valores de la variable dependiente rendimiento]
+
+ -----------------------------------------------------------------------------------------------------------     ----        ------------------------
+|   97       | 191575              | 22371449              | 21446480              | 36439841,4             |   | b0 |      | 129054,78              |
+ -----------------------------------------------------------------------------------------------------------     ----        ------------------------
+| 191575     | 378436673           | 22371449 * 191575     | 21446480 * 191575     | 36439841,4  * 191575   |   | b1 |      | 191575 * 129054,78     |
+ -----------------------------------------------------------------------------------------------------------     ----        ------------------------
+| 22371449   | 191575 * 22371449   | 6402892696449         | 21446480 * 22371449   | 36439841,4  * 22371449 |   | b2 |      | 22371449 * 129054,78   |
+ -----------------------------------------------------------------------------------------------------------     ----        ------------------------
+| 21446480   | 191575 * 21446480   | 22371449 * 21446480   | 5972973986094         | 36439841,4  * 21446480 |   | b3 |      | 21446480 * 129054,78   |
+ -----------------------------------------------------------------------------------------------------------     ----        ------------------------
+| 36439841,4 | 191575 * 36439841,4 | 22371449 * 36439841,4 | 21446480 * 36439841,4 | 24719672959067,2       | * | b4 | =    | 36439841,4 * 129054,78 |
+ -----------------------------------------------------------------------------------------------------------     ----        ------------------------
+[.....................................................X.....................................................] * [..b..] =   [...........Y............]
+
+Tenemos entonces una ecuación matricial donde la intención es despejar la matriz b:
+
+Sabemos que:
+X_transversa*Y = X_transversa*X*b
+
+Entonces para despejar ^b debemos hacer:
+^b = (X_transversa*X)-¹ * X_transversa*Y
+
+Para hacer la estimación de los betas vamos a utilizar un script en Python usando las librerías pandas para leer y procesar el .csv y numpy para los cálculos.
+
+[ pegar link al codigo "minimos_cuadrados.py"]
+
+Los resultados que arrojo fueron los siguientes:
+
+b0 (rendimiento): -16988.052990805078
+b1 (Año): 9.257050531336022
+b2 (SuperficieSembrada): 0.0031599268599484262
+b3 (SuperficieCosechada): -0.0066507792825439335
+b4 (Producción): 0.002069716111442946
+
+R² del modelo: 0.9120
+
+Y la estimacíon de la ecuación de regresión finalmente queda como: 
+ŷ = ^b0 + ^b1*x1 + ^b2*x2+ ^b3*x3+ ^b4*x4
+ŷ = -16988.052990805078 +  9.257050531336022*x1 + 0.0031599268599484262*x2+ -0.0066507792825439335*x3+ 0.002069716111442946*x4
+ŷ= -16988.052 + 9.25 * año + 0,00315 * SuperficieSembrada  - 0.00663  *SuperficieCosechada 
+
+en este caso podemos ver como el coeficiente del año (b1) indica una tendencia del rendimiento a lo largo del tiempo
+posiblemente por mejoras tecnologocias o mejoras en las practicas agricolos. El coeficioente de SuperficieSembrada (b2 >0)
+sugiere que mayores superficies tienenden a incrementar levemente el rendimiento promedio.
+En cambio, superficie_cosechada (B3 > 0) podria verse como que cuando aumental la superficie efectivamente cosechada,
+el rendimiento promedio baja, esto puede darse por factores climatios, pestes, etc.
+el coeficiente de produccion (b4 >0) es positivo, esto es coherente con la idea de que mayor produccion total se asocia con mayores rendimientos 
+
+el R^2 = 0.9120 nos indica que el modelo explica cerca del %91 de la variablididad del rendimiento. como es un valor alto es decir cercano a 1
+muestra que este modelo se ajusta correctamente 
+
+En conclusion, el modelo se ajusta de manera razonable a los datos y permite estimar el rendimiento a partir de las variables independeintes.
+
+
+
