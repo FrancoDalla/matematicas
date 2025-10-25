@@ -17,7 +17,7 @@ def cost_function(X, y, theta):
     cost = 1/(2*m) * np.dot(error.T, error)
     return cost, error
 
-def gradient_descent(X, y, theta, alpha, max_iters, tolerancia=1e-6, min_cost_change=1e-8):
+def gradient_descent(X, y, theta, eta, tolerancia=1e-6, min_cost_change=1e-8):
     """
     Descenso del gradiente
 
@@ -25,16 +25,16 @@ def gradient_descent(X, y, theta, alpha, max_iters, tolerancia=1e-6, min_cost_ch
     - X: matriz de características
     - y: vector objetivo
     - theta: parámetros iniciales
-    - alpha: tasa de aprendizaje
-    - max_iters: máximo número de iteraciones
+    - eta: tasa de aprendizaje
     - tolerancia: error aceptable para la convergencia
     - min_cost_change: cambio mínimo en el costo para considerar convergencia
     """
     cost_array = []
     m = y.size
     previous_cost = float('inf')
+    i = 0
 
-    for i in range(max_iters):
+    while True:
         cost, error = cost_function(X, y, theta)
         cost_array.append(cost)
 
@@ -53,12 +53,14 @@ def gradient_descent(X, y, theta, alpha, max_iters, tolerancia=1e-6, min_cost_ch
                 break
 
         # Actualizar parámetros
-        theta = theta - (alpha * (1/m) * np.dot(X.T, error))
+        theta = theta - (eta * (1/m) * np.dot(X.T, error))
         previous_cost = cost
 
         # Mostrar progreso cada 100 iteraciones
         if i % 100 == 0:
             print(f'Iteración {i}: Costo = {cost:.6f}')
+        
+        i+=1
 
     return theta, np.array(cost_array)
 
@@ -77,8 +79,7 @@ def run():
     # Añadir columna de unos para el término de bias
     X_final = np.c_[np.ones(X_normalized.shape[0]), X_normalized]
 
-    alpha = 0.01
-    max_iterations = 10000  # Máximo más alto para permitir convergencia
+    eta = 0.01
     tolerancia = 1e-4       # Error aceptable
     min_cost_change = 1e-8 # Cambio mínimo en costo para convergencia
 
@@ -91,13 +92,12 @@ def run():
     print('=' * 60)
     print(f'Parámetros iniciales theta: {theta}')
     print(f'Costo inicial: {initial_cost:.6f}')
-    print(f'Tasa de aprendizaje (alpha): {alpha}')
+    print(f'Tasa de aprendizaje (eta): {eta}')
     print(f'Error aceptable (tolerancia): {tolerancia}')
-    print(f'Máximo de iteraciones: {max_iterations}')
     print('-' * 60)
 
     theta_final, cost_history = gradient_descent(
-        X_final, y, theta, alpha, max_iterations, tolerancia, min_cost_change
+        X_final, y, theta, eta, tolerancia, min_cost_change
     )
 
     print('-' * 60)
